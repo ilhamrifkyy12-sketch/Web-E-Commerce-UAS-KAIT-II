@@ -1,32 +1,20 @@
-// Peta gambar kategori (file SVG asli di folder images/)
-const categoryImageMap = {
-  "Cat Air": "images/kategori-cat-air.svg",
-  "Kertas": "images/kategori-kertas.svg",
-  "Kuas": "images/kategori-kuas.svg",
-  "Pensil": "images/kategori-pensil.svg",
-  "Pena": "images/kategori-pena.svg"
-};
-
-// Database Perlengkapan Lukis Premium Artisuria
+// Database Perlengkapan Lukis Premium Artisuria (10 Produk Premium)
 const defaultProducts = [
-  { id: 101, name: "Schmincke Horadam Set", category: "Cat Air", price: 850000, stock: 8, desc: "Cat air kelas profesional impor Jerman dengan pigmen murni kualitas tertinggi.", icon: "🎨" },
-  { id: 102, name: "Winsor & Newton Pan Set", category: "Cat Air", price: 345000, stock: 15, desc: "Set cat air compact ideal untuk ilustrator studio luar ruangan.", icon: "🎨" },
-  { id: 103, name: "Canson Heritage Rag A4", category: "Kertas", price: 290000, stock: 12, desc: "Kertas lukis 100% katun cold pressed bertekstur mewah.", icon: "📄" },
-  { id: 104, name: "Arches Watercolor Pad", category: "Kertas", price: 420000, stock: 5, desc: "Kertas katun murni buatan pabrik Prancis legendaris.", icon: "📄" },
-  { id: 105, name: "Raphael Kolinsky Brush No.6", category: "Kuas", price: 310000, stock: 4, desc: "Kuas bulu alami pilihan dengan daya serap air luar biasa.", icon: "🖌️" },
-  { id: 106, name: "Princeton Neptune Brush Set", category: "Kuas", price: 275000, stock: 10, desc: "Set kuas sintetis premium bertekstur lembut, ramah lingkungan (cruelty-free).", icon: "🖌️" },
-  { id: 107, name: "Faber-Castell Polychromos", category: "Pensil", price: 950000, stock: 6, desc: "Pensil warna berbasis minyak premium tahan luntur cahaya jangka panjang.", icon: "✏️" },
-  { id: 108, name: "Prismacolor Premier 72 Set", category: "Pensil", price: 680000, stock: 9, desc: "Set 72 warna pensil lunak dengan blending sangat halus untuk ilustrasi detail.", icon: "✏️" },
-  { id: 109, name: "Sakura Pigma Micron Set", category: "Pena", price: 135000, stock: 25, desc: "Pena arsiran presisi dengan tinta pigmen arsiran waterproof.", icon: "🖋️" },
-  { id: 110, name: "Copic Multiliner SP Set", category: "Pena", price: 210000, stock: 14, desc: "Pena liner tinta pigment tahan air dengan ujung refillable presisi tinggi.", icon: "🖋️" }
+  { id: 101, name: "Schmincke Horadam Set", category: "Cat Air", price: 850000, stock: 8, desc: "Cat air kelas profesional impor Jerman dengan pigmen murni kualitas tertinggi.", image: "assets/schmincke.jpg" },
+  { id: 102, name: "Winsor & Newton Pan Set", category: "Cat Air", price: 345000, stock: 15, desc: "Set cat air compact ideal untuk ilustrator studio luar ruangan.", image: "assets/winsor_newton.jpg" },
+  { id: 103, name: "Canson Heritage Rag A4", category: "Kertas", price: 290000, stock: 12, desc: "Kertas lukis 100% katun cold pressed bertekstur mewah.", image: "assets/canson.jpg" },
+  { id: 104, name: "Arches Watercolor Pad", category: "Kertas", price: 420000, stock: 5, desc: "Kertas katun murni buatan pabrik Prancis legendaris.", image: "assets/arches.jpg" },
+  { id: 105, name: "Raphael Kolinsky Brush No.6", category: "Kuas", price: 310000, stock: 4, desc: "Kuas bulu alami pilihan dengan daya serap air luar biasa.", image: "assets/raphael_brush.jpg" },
+  { id: 107, name: "Faber-Castell Polychromos", category: "Pensil", price: 950000, stock: 6, desc: "Pensil warna berbasis minyak premium tahan luntur cahaya jangka panjang.", image: "assets/faber_castell.jpg" },
+  { id: 109, name: "Sakura Pigma Micron Set", category: "Pena", price: 135000, stock: 25, desc: "Pena arsiran presisi dengan tinta pigmen arsiran waterproof.", image: "assets/sakura_micron.jpg" },
+  { id: 110, name: "Holbein Artists Gouache", category: "Cat Air", price: 620000, stock: 7, desc: "Cat gouache premium buatan Jepang bertekstur pekat pekat.", image: "assets/holbein_gouache.jpg" },
+  { id: 111, name: "Escoda Optimo Kolinsky Set", category: "Kuas", price: 580000, stock: 3, desc: "Satu set kuas buatan tangan seniman dari Barcelona dengan presisi bulu tiada tara.", image: "assets/escoda_brush.jpg" },
+  { id: 112, name: "Derwent Inktense 24 Tin", category: "Pensil", price: 495000, stock: 10, desc: "Pensil warna revolusioner berbahan dasar tinta kering yang permanen setelah terkena air.", image: "assets/derwent_inktense.jpg" }
 ];
 
-// Lengkapi setiap produk dengan gambar uniknya sendiri (fallback ke gambar kategori bila tidak tersedia)
-defaultProducts.forEach(p => { p.image = `images/products/product-${p.id}.svg`; });
-
+// Catatan: Jika ingin nama file gambarnya di-update secara nyata di localStorage pada browser Anda, 
+// pastikan untuk melakukan "Clear Storage / Clear Site Data" terlebih dahulu agar variable `products` mengambil data fresh di bawah ini.
 let products = JSON.parse(localStorage.getItem("art_products")) || defaultProducts;
-// Migrasi data lama: pastikan setiap produk (termasuk yang tersimpan di localStorage versi sebelumnya) punya field image
-products.forEach(p => { if (!p.image) p.image = `images/products/product-${p.id}.svg`; });
 let cart = JSON.parse(localStorage.getItem("art_cart")) || [];
 let salesHistory = JSON.parse(localStorage.getItem("art_sales")) || [];
 let currentUser = JSON.parse(localStorage.getItem("art_session")) || null;
@@ -125,7 +113,8 @@ function renderWidgets() {
   const randomThree = products.slice(0, 3);
   topRatedContainer.innerHTML = randomThree.map(p => `
     <div class="widget-product-item">
-      <div class="wp-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${categoryImageMap[p.category] || 'images/hero-banner.svg'}';"></div>
+      <!-- UPDATE: Menggunakan elemen img dari folder assets -->
+      <div class="wp-img"><img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;"></div>
       <div class="wp-details">
         <h5>${p.name}</h5>
         <p>Rp ${p.price.toLocaleString('id-ID')}</p>
@@ -173,7 +162,10 @@ function renderProducts() {
   grid.innerHTML = filtered.map(p => {
     return `
       <div class="product-card">
-        <div class="pc-image-box"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${categoryImageMap[p.category] || 'images/hero-banner.svg'}';"></div>
+        <!-- UPDATE: Menggunakan elemen img dari folder assets -->
+        <div class="pc-image-box">
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">
+        </div>
         <div class="pc-info">
           <div>
             <div class="pc-category">${p.category}</div>
@@ -206,7 +198,8 @@ function addToCart(id) {
     if(inCart.qty < prod.stock) inCart.qty++;
     else return showToast("Available stock baseline hit.");
   } else {
-    cart.push({ id: prod.id, name: prod.name, price: prod.price, icon: prod.icon, image: prod.image, qty: 1 });
+    // UPDATE: Membawa properti image alih-alih icon ke dalam object keranjang belanja
+    cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1 });
   }
   updateCartBadge();
   saveData();
@@ -226,7 +219,10 @@ function renderCartItems() {
   }
   container.innerHTML = cart.map(item => `
     <div class="cart-item-row">
-      <div class="cr-img">${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='images/hero-banner.svg';">` : item.icon}</div>
+      <!-- UPDATE: Menggunakan elemen img dari folder assets -->
+      <div class="cr-img">
+        <img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover; border-radius:4px;">
+      </div>
       <div class="cr-info">
         <h5>${item.name}</h5>
         <div style="font-size:0.8rem; color:var(--primary); font-weight:bold; margin-top:2px;">Rp ${item.price.toLocaleString('id-ID')}</div>
