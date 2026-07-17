@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artisuria — Portal Perlengkapan Seni</title>
+  <style>
+    /* ==========================================================================
+       THEME: CLASSIC PORTAL E-COMMERCE WITH SIDEBAR (Interactive Update)
+       ========================================================================== */
+    :root {
+      --bg-topbar: #22252A;
+      --bg-nav: #6C757D;
+      --primary: #E91E63;        
+      --text-dark: #333333;
+      --text-muted: #777777;
+      --border: #E0E0E0;
+      --bg-light: #F8F9FA;
+      --font: Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background-color: #FFFFFF; color: var(--text-dark); line-height: 1.5; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+    /* UTILITY BUTTONS */
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: bold; text-transform: capitalize; cursor: pointer; border: none; transition: all 0.2s ease; text-decoration: none; border-radius: 3px; }
+    .btn-primary { background: var(--primary); color: #FFF; }
+    .btn-primary:hover { background: #D81B60; transform: translateY(-1px); }
+    .btn-secondary { background: var(--bg-nav); color: #FFF; }
+    .btn-secondary:hover { background: #5a6268; }
+    .btn-block { width: 100%; display: block; }
+
+    /* TOP INFO BAR */
+    .top-bar { background: var(--bg-topbar); color: #BBB; font-size: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #333; }
+    .top-bar-container { display: flex; justify-content: space-between; align-items: center; }
+    .top-left-info a, .top-left-info span { margin-right: 15px; color: #BBB; text-decoration: none; transition: color 0.2s; }
+    .top-left-info a:hover { color: #FFF; }
+    .auth-link { background: none; border: none; color: #FFF; cursor: pointer; font-weight: bold; text-decoration: underline; }
+
+    /* HEADER & SEARCH BLOCK */
+    .main-header { padding: 1.5rem 0; background: #FFF; }
+    .header-container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .brand-logo { text-decoration: none; color: #111; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { background: var(--primary); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .brand-logo h1 { font-size: 1.6rem; font-weight: bold; color: #0f2942; }
+    .brand-logo span { font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: -2px; }
+    
+    .header-search-area { flex: 1; max-width: 500px; display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+    .header-search-area select { border: none; padding: 0.5rem; background: var(--bg-light); outline: none; font-size: 0.85rem; border-right: 1px solid var(--border); }
+    .header-search-area input { border: none; padding: 0.5rem 1rem; flex: 1; outline: none; font-size: 0.85rem; }
+    .header-search-btn { background: #FFF; border: none; padding: 0 1rem; color: var(--text-muted); cursor: pointer; }
+
+    .header-cart-box { position: relative; cursor: pointer; display: flex; align-items: center; transition: transform 0.2s; }
+    .header-cart-box:hover { transform: scale(1.05); }
+    .cart-icon-wrapper { font-size: 2rem; color: #888; position: relative; }
+    .cart-badge { position: absolute; top: -2px; right: -5px; background: var(--primary); color: #FFF; font-size: 0.7rem; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+
+    /* BLOCK NAVIGATION BAR */
+    .main-nav { background: var(--bg-nav); margin-bottom: 2rem; }
+    .nav-container { display: flex; list-style: none; }
+    .nav-item { padding: 1rem 1.5rem; color: #FFF; font-size: 0.9rem; font-weight: bold; cursor: pointer; text-decoration: none; border-right: 1px solid rgba(255,255,255,0.1); transition: background 0.2s; }
+    .nav-item:hover, .nav-item.active { background: #555D64; }
+
+    /* VIEW SECTIONS */
+    .view-section { display: none; padding-bottom: 3rem; min-height: 70vh; }
+    .view-section.active { display: block; }
+
+    /* FEATURED GRID BANNER */
+    .banner-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+    @media (max-width: 768px) { .banner-grid { grid-template-columns: 1fr; } }
+    .main-banner { background: #E9ECEF; position: relative; height: 350px; display: flex; align-items: center; padding: 3rem; background-size: cover; background-position: center; border: 1px solid var(--border); }
+    .main-banner-content { max-width: 350px; z-index: 2; }
+    .main-banner-content h2 { font-size: 2.2rem; font-weight: bold; margin-bottom: 0.5rem; line-height: 1.2; }
+    .main-banner-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .side-banners { display: flex; flex-direction: column; gap: 1rem; }
+    .sub-banner { background: #F1F3F5; flex: 1; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--border); position: relative; overflow: hidden; min-height: 165px; transition: transform 0.2s; }
+    .sub-banner:hover { transform: translateY(-2px); }
+    .sub-banner h4 { font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+    .sub-banner h3 { font-size: 1.2rem; margin: 0.2rem 0 0.5rem 0; }
+    .banner-art-bg { position: absolute; right: 15px; bottom: 10px; font-size: 5rem; opacity: 0.15; pointer-events: none; }
+
+    /* MAIN PORTAL TWO-COLUMN LAYOUT */
+    .portal-layout { display: grid; grid-template-columns: 3fr 1fr; gap: 2rem; }
+    @media (max-width: 992px) { .portal-layout { grid-template-columns: 1fr; } }
+
+    /* CATALOG CONTROLS */
+    .catalog-top-bar { display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); border: 1px solid var(--border); padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+    .catalog-top-bar select { padding: 0.3rem; border: 1px solid var(--border); outline: none; }
+
+    /* PRODUCT CARD GRID WITH INTERACTIVE HOVER */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+    .product-card { border: 1px solid var(--border); text-align: center; display: flex; flex-direction: column; background: #FFF; position: relative; border-radius: 3px; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.05); border-color: #BBB; }
+    .pc-image-box { background: #FFF; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; border-bottom: 1px solid #F1F1F1; }
+    .pc-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .pc-category { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+    .pc-title { font-size: 0.95rem; font-weight: bold; color: #333; margin-bottom: 0.5rem; min-height: 2.4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .pc-price { font-size: 1.1rem; font-weight: bold; color: #111; margin-bottom: 1rem; }
+    .btn-cart-add { background: var(--primary); color: #FFF; font-size: 0.8rem; font-weight: bold; padding: 0.6rem; border: none; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; border-radius: 2px; transition: background 0.2s; }
+    .btn-cart-add:hover { background: #D81B60; }
+    .btn-cart-add:disabled { background: #CCC; cursor: not-allowed; }
+
+    /* SIDEBAR COMPONENT */
+    .sidebar-widget { border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; background: #FFF; }
+    .widget-title { font-size: 1rem; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1rem; color: #222; }
+    .sidebar-search input { width: 100%; padding: 0.5rem; border: 1px solid var(--border); outline: none; font-size: 0.85rem; }
+    
+    .category-list { list-style: none; }
+    .category-item { padding: 0.5rem 0; border-bottom: 1px dashed var(--border); font-size: 0.85rem; color: #444; cursor: pointer; display: flex; justify-content: space-between; transition: padding-left 0.2s; }
+    .category-item:hover, .category-item.active { color: var(--primary); font-weight: bold; padding-left: 5px; }
+
+    /* TOP RATED WIDGET LIST */
+    .widget-product-item { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid #F5F5F5; padding-bottom: 0.5rem; }
+    .wp-img { width: 45px; height: 45px; background: var(--bg-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 1px solid var(--border); }
+    .wp-details h5 { font-size: 0.85rem; font-weight: bold; color: #333; }
+    .wp-details p { font-size: 0.8rem; color: var(--primary); font-weight: bold; margin-top: 2px; }
+
+    /* BUSINESS OVERVIEW DESIGN */
+    .overview-hero { background: var(--bg-light); border: 1px solid var(--border); padding: 2.5rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); }
+    .overview-hero h3 { margin-bottom: 0.75rem; font-size: 1.4rem; }
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 768px) { .overview-grid { grid-template-columns: 1fr; } }
+    .overview-card { border: 1px solid var(--border); padding: 1.5rem; background: #FFF; }
+    .overview-card h4 { font-size: 1.1rem; margin-bottom: 0.7rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; color: #111; }
+    
+    .analytics-flex { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .analytic-box { flex: 1; min-width: 200px; background: var(--bg-topbar); color: white; padding: 1.5rem; text-align: center; border-radius: 4px; }
+    .analytic-box h6 { font-size: 0.75rem; text-transform: uppercase; color: #AAA; letter-spacing: 0.5px; margin-bottom: 0.4rem; }
+    .analytic-box p { font-size: 1.6rem; font-weight: bold; color: #FFF; }
+
+    /* ADMIN PANEL DESIGN */
+    .table-responsive { border: 1px solid var(--border); overflow-x: auto; background: #FFF; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    .data-table th { background: var(--bg-light); padding: 0.75rem 1rem; border-bottom: 2px solid var(--border); font-weight: bold; }
+    .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    .inp-stock { width: 60px; padding: 0.25rem; text-align: center; border: 1px solid var(--border); }
+
+    /* OVERLAYS SYSTEMS */
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-box { background: #FFF; margin: auto; width: 90%; max-width: 420px; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; }
+    .modal-header { background: var(--bg-light); border-bottom: 1px solid var(--border); padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h3 { font-size: 1rem; font-weight: bold; }
+    .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; }
+    .modal-body { padding: 1.5rem; }
+
+    /* INVOICE SUCCESS POP-UP CUSTOM STYLING */
+    .receipt-box { border: 2px dashed #DDD; padding: 1rem; background: #FAF9F6; margin-top: 1rem; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; }
+    .receipt-header { text-align: center; margin-bottom: 1rem; border-bottom: 1px dashed #999; padding-bottom: 0.5rem; }
+    .receipt-row { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+
+    /* FORMS */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 0.3rem; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.5rem; border: 1px solid var(--border); outline: none; font-size: 0.85rem; border-radius: 2px; }
+
+    /* DRAWER CART RIGHT SIDE */
+    .drawer-box { background: #FFF; height: 100%; width: 100%; max-width: 400px; margin-left: auto; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.25s ease-in-out; }
+    .overlay.open .drawer-box { transform: translateX(0); }
+    
+    .cart-item-row { display: flex; gap: 0.75rem; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+    .cr-img { width: 40px; height: 40px; background: var(--bg-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .cr-info { flex: 1; }
+    .cr-info h5 { font-size: 0.85rem; font-weight: bold; }
+    .cr-qty-btn { width: 22px; height: 22px; border: 1px solid var(--border); background: #FFF; cursor: pointer; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: #FFF; padding: 0.75rem 1.5rem; font-size: 0.8rem; font-weight: bold; border-radius: 3px; z-index: 100000; transform: translateY(100px); transition: transform 0.2s; pointer-events: none; border-left: 4px solid var(--primary); }
+    .toast.show { transform: translateY(0); }
+
+    /* FOOTER */
+    .main-footer { background: #22252A; color: #999; text-align: center; padding: 2rem 0; margin-top: 4rem; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR INFO SECTION -->
+  <div class="top-bar">
+    <div class="container top-bar-container">
+      <div class="top-left-info">
+        <!-- LINK WA KLIK-UNTUK-CHAT DIJADIKAN AKTIF -->
+        <a href="https://wa.me/62895412859941" target="_blank" title="Hubungi via WhatsApp">📞 0895412859941 (Chat WA)</a>
+        <span>✉️ support@artisuria.com</span>
+        <span>📍 Lembang, West Java</span>
+      </div>
+      <div>
+        SESSION STATUS: <span id="authStatusLabel" style="color: #FFF; font-weight: bold;">GUEST</span> | 
+        <button class="auth-link" id="authLogBtn">Login / Register</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEAD SITE MAIN -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="#" class="brand-logo" onclick="switchView('katalog')">
+        <div class="logo-icon">👜</div>
+        <div>
+          <h1>Artisuria</h1>
+          <span>Best Fine Art Commerce</span>
+        </div>
+      </a>
+      
+      <div class="header-search-area">
+        <select id="headerCategorySelect" onchange="syncSearchCategory(this.value)">
+          <option value="Semua">All Categories</option>
+        </select>
+        <input type="text" id="headerSearchInput" placeholder="Search products..." oninput="syncSearchText(this.value)">
+        <button class="header-search-btn">🔍</button>
+      </div>
+
+      <div class="header-cart-box" id="cartBtn">
+        <div class="cart-icon-wrapper">🛒<span class="cart-badge" id="cartCount">0</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BLOCK NAV LINKS BAR -->
+  <nav class="main-nav">
+    <div class="container nav-container">
+      <div class="nav-item active" id="nav-katalog" onclick="switchView('katalog')">Home Collection</div>
+      <div class="nav-item" id="nav-overview" onclick="switchView('overview')">Business Architecture</div>
+      <div class="nav-item" id="nav-admin" onclick="switchView('admin')">Internal Management Node</div>
+    </div>
+  </nav>
+
+  <!-- VIEW 1: MAIN E-COMMERCE PORTAL WITH SIDEBAR -->
+  <main class="view-section active" id="view-katalog">
+    <div class="container">
+      
+      <!-- HERO GRID PROMOTION BLOCK -->
+      <section class="banner-grid">
+        <div class="main-banner">
+          <div class="main-banner-content">
+            <h2>Premium Painting Medium</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur adipisicing elit dignissim.</p>
+            <button class="btn btn-primary" onclick="filterCat('Cat Air')">Read More</button>
+          </div>
+        </div>
+        <div class="side-banners">
+          <div class="sub-banner">
+            <h4>Exclusive Papers</h4>
+            <h3>Summer 2026 Collection</h3>
+            <span class="auth-link" style="color:var(--primary); font-size:0.8rem; font-weight:bold; cursor:pointer;" onclick="filterCat('Kertas')">On your Store</span>
+            <div class="banner-art-bg">📄</div>
+          </div>
+          <div class="sub-banner">
+            <h4>Brushes & Tools</h4>
+            <h3>Professional Fine Line</h3>
+            <span class="auth-link" style="color:var(--primary); font-size:0.8rem; font-weight:bold; cursor:pointer;" onclick="filterCat('Kuas')">On your Store</span>
+            <div class="banner-art-bg">🖌️</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TWO COLUMN WORKSPACE PLATFORM -->
+      <div class="portal-layout">
+        
+        <!-- LEFT: CATALOG CORE -->
+        <div class="catalog-core">
+          <div class="catalog-top-bar">
+            <span id="resultCount">Showing 1–8 of 8 results</span>
+            <select id="sortSelect">
+              <option value="default">Default sorting</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="name-asc">Name: A - Z</option>
+            </select>
+          </div>
+
+          <div class="product-grid" id="productGrid"></div>
+          <div id="emptyState" style="padding: 4rem; text-align: center; color: var(--text-muted);" hidden>No items match the chosen query parameters.</div>
+        </div>
+
+        <!-- RIGHT: SIDEBAR PLATFORM CONTROLS -->
+        <aside class="sidebar-area">
+          <div class="sidebar-widget">
+            <h4 class="widget-title">Search Archive</h4>
+            <div class="sidebar-search">
+              <input type="text" id="sidebarSearchInput" placeholder="Search products..." oninput="syncSearchText(this.value)">
+            </div>
+          </div>
+
+          <div class="sidebar-widget">
+            <h4 class="widget-title">Filter By Medium</h4>
+            <ul class="category-list" id="categoryWidgetList"></ul>
+          </div>
+
+          <div class="sidebar-widget">
+            <h4 class="widget-title">Top Rated Supplies</h4>
+            <div id="topRatedWidgetContainer"></div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 2: STRATEGIC BUSINESS OVERVIEW -->
+  <section class="view-section" id="view-overview">
+    <div class="container">
+      <div class="overview-hero">
+        <h3>Corporate Overview & Technical Architecture</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Analisis Profil Usaha Terintegrasi Modul Evaluasi KAIT II Periode Tahun Akademik 2026</p>
+      </div>
+      
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h4>Sejarah Perusahaan</h4>
+          <p style="text-align: justify; font-size: 0.85rem; color: #555;">
+            Didirikan pada awal semester perkuliahan Administrasi Bisnis tahun 2026, **Artisuria** lahir dari keresahan mahasiswa seni dan ilustrator lokal yang kesulitan mendapatkan alat lukis kelas profesional dengan harga terjangkau. Bermula sebagai distributor retail kecil, kini Artisuria berkembang menjadi platform e-commerce terintegrasi yang menyuplai produk seni rupa impor berkualitas tinggi ke seluruh nusantara.
+          </p>
+        </div>
+        <div class="overview-card">
+          <h4>Visi & Misi Perusahaan</h4>
+          <p style="font-size: 0.85rem; color: #555;">
+            <strong>Visi:</strong> Menjadi platform e-commerce perlengkapan seni rupa nomor satu di Indonesia yang menginspirasi lahirnya maestro seni generasi baru.<br><br>
+            <strong>Misi:</strong><br>
+            • Menyediakan produk alat gambar original 100% yang lolos uji kurasi seniman profesional.<br>
+            • Membangun sistem distribusi digital terintegrasi yang cepat dan ramah pengguna.<br>
+            • Menyediakan edukasi berkelanjutan mengenai penggunaan medium gambar modern.
+          </p>
+        </div>
+      </div>
+
+      <div class="analytics-flex">
+        <div class="analytic-box"><h6>System Bounce Rate</h6><p>21.8%</p></div>
+        <div class="analytic-box"><h6>Conversion Ratio</h6><p>5.2%</p></div>
+        <div class="analytic-box"><h6>Total Hits Unique Visitors</h6><p>1,480</p></div>
+        <div class="analytic-box"><h6>Gross Settlement Revenue</h6><p id="an-revenue">Rp0</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 3: ADMINISTRATIVE LEDGER CONTROL -->
+  <section class="view-section" id="view-admin">
+    <div class="container">
+      <div id="adminAccessDenied" style="padding: 5rem 2rem; border: 1px dashed var(--border); text-align: center; background: var(--bg-light);">
+        <h3 style="margin-bottom: 0.5rem;">Restricted Administrative Panel</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Please sign in using system coordinator authority credentials.</p>
+        <button class="btn btn-primary" onclick="openLoginModal('admin')">Login System Admin</button>
+      </div>
+
+      <div id="adminAccessGranted" style="display: none;">
+        <h3 style="margin-bottom: 1.5rem; border-left: 4px solid var(--primary); padding-left: 0.5rem;">Inventory Stock Adjustment Management</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product Label</th>
+                <th>Category</th>
+                <th>Unit Pricing Base</th>
+                <th>Stock Allotted</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody id="adminInventoryTable"></tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top: 3.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); padding-left: 0.5rem;">Inbound Orders Settlement Ledger</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Invoice Identity</th>
+                <th>Consignee</th>
+                <th>Items Dispatched</th>
+                <th>Gateway Settlement Channel</th>
+                <th>Total Value Paid</th>
+              </tr>
+            </thead>
+            <tbody id="adminHistoryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGIN ARCHITECTURE ENTRY OVERLAY -->
+  <div class="overlay" id="loginOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="loginModalTitle">Security Authentication Node</h3>
+        <button class="modal-close" data-close="loginOverlay">&times;</button>
+      </div>
+      <form id="loginForm" class="modal-body" novalidate>
+        <div style="background: var(--bg-light); border:1px solid var(--border); padding:0.75rem; font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem; border-radius:3px;">
+          <strong>SIMULATION ACCOUNT PASSPORT:</strong><br>
+          • Customer Account: <code>user@artisuria.com</code> / <code>user123</code><br>
+          • Admin Account: <code>admin@artisuria.com</code> / <code>admin123</code>
+        </div>
+        <input type="hidden" id="loginRoleTarget" value="customer">
+        <div class="form-group">
+          <label for="loginEmail">Email Username</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Credential Token Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">Process Authentication</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR DRAWER CART -->
+  <div class="overlay" id="cartOverlay">
+    <div class="drawer-box">
+      <div class="modal-header" style="background: var(--bg-topbar); color:#FFF;">
+        <h3>Your Shopping Bag</h3>
+        <button class="modal-close" data-close="cartOverlay" style="color:#FFF;">&times;</button>
+      </div>
+      <div class="modal-body" id="cartItems" style="flex:1; overflow-y:auto;"></div>
+      <div style="padding: 1.5rem; border-top: 1px solid var(--border); background: var(--bg-light);">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1rem; margin-bottom: 1rem;">
+          <span>Subtotal Checkout:</span>
+          <span id="cartTotal" style="color: var(--primary);">Rp 0</span>
+        </div>
+        <button class="btn btn-primary btn-block" id="checkoutBtn">Proceed To Invoice Settlement</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT BILLING PROCESS SIMULATOR -->
+  <div class="overlay" id="checkoutOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Secure Checkout Invoicing</h3>
+        <button class="modal-close" data-close="checkoutOverlay">&times;</button>
+      </div>
+      <form id="checkoutForm" class="modal-body" novalidate>
+        <div class="form-group">
+          <label for="ckName">Full Legal Name</label>
+          <input type="text" id="ckName" required>
+        </div>
+        <div class="form-group">
+          <label for="ckAddress">Shipping Destination Address</label>
+          <textarea id="ckAddress" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ckPayment">Payment Gateway Sandbox Provider</label>
+          <select id="ckPayment">
+            <option value="Midtrans Sandbox VA">Midtrans Automated Bank Transfer</option>
+            <option value="Xendit Auto QRIS">Xendit Instant QRIS API</option>
+          </select>
+        </div>
+        <div style="background: var(--bg-light); border: 1px solid var(--border); padding: 0.75rem; font-weight: bold; text-align: right; margin-bottom: 1rem;">
+          Payable Total Amount: <span id="ckTotal" style="color:var(--primary);">Rp 0</span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Authorize & Complete Payment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- NEW MODAL OVERLAY: INVOICE SUCCESS POP-UP TAMPILAN NOTA -->
+  <div class="overlay" id="invoiceSuccessOverlay">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header" style="background: #2E7D32; color: white;">
+        <h3>🎉 Payment Success Confirmed</h3>
+        <button class="modal-close" data-close="invoiceSuccessOverlay" style="color: white;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="text-align: center; font-size: 0.9rem; font-weight: bold; color: #2E7D32;">Transaksi Berhasil Diselesaikan!</p>
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Berikut adalah salinan invoice resmi ledger internal platform:</p>
+        
+        <div class="receipt-box" id="receiptContent">
+          <!-- Dinamis diisi lewat JavaScript -->
+        </div>
+
+        <button class="btn btn-secondary btn-block" style="margin-top: 1.5rem; background: #2E7D32;" onclick="document.getElementById('invoiceSuccessOverlay').classList.remove('open')">Selesai & Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2026 Artisuria Inc. Developed under responsive grid portal architectures for KAIT II Examination.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">SYSTEM NOTICE ALIGNED</div>
+  <script src="script.js"></script>
+</body>
+</html>
