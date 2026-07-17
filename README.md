@@ -10,8 +10,8 @@
 > Tugas Besar (Final Project) — Mata Kuliah **KAIT II**, Program Studi Administrasi Bisnis, Semester Genap 2025/2026
 > Judul Proyek: *"Membangun Website E-Commerce Fungsional dengan Integrasi Strategi Bisnis Modern"*
 
-🔗 **Live Website (GitHub Pages):** `<isi-link-github-pages-di-sini>`
-🔗 **Repository GitHub:** `<isi-link-repository-github-di-sini>`
+🔗 **Live Website (GitHub Pages):** https://ilhamrifkyy12-sketch.github.io/Web-E-Commerce-UAS-KAIT-II/
+🔗 **Repository GitHub:** https://github.com/ilhamrifkyy12-sketch/Web-E-Commerce-UAS-KAIT-II
 
 ---
 
